@@ -16,13 +16,22 @@ public class SAXCustomerHandler extends DefaultHandler {
     private StringBuilder currentText;
     private static final String XMLDATEFORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
-    public List<Customer> readDataFromXML(String filename) throws ParserConfigurationException, SAXException,
+    public List<Customer> readDataFromXML(String filename) throws ParserConfigurationException,
         IOException {
 
         SAXParserFactory saxParserFactory = SAXParserFactory.newNSInstance();
         saxParserFactory.setNamespaceAware(true);
-        SAXParser saxParser = saxParserFactory.newSAXParser();
-        saxParser.parse(new File(filename), this);
+        SAXParser saxParser = null;
+        try {
+            saxParser = saxParserFactory.newSAXParser();
+        } catch (SAXException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            saxParser.parse(new File(filename), this);
+        } catch (SAXException e) {
+            System.out.println(e.getMessage());
+        }
         return data;
     }
 
@@ -106,5 +115,23 @@ public class SAXCustomerHandler extends DefaultHandler {
         if (currentText != null) {
             currentText.append(ch, start, length);
         }
+    }
+
+    @Override
+    public void warning(SAXParseException e) throws SAXException {
+
+        System.out.println("Warning");
+    }
+
+    @Override
+    public void error(SAXParseException e) throws SAXException {
+
+        System.out.println("Error");
+    }
+
+    @Override
+    public void fatalError(SAXParseException e) throws SAXException {
+
+        System.out.println("Fatal error");
     }
 }
