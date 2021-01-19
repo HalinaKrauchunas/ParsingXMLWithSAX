@@ -20,6 +20,7 @@ public class SAXCustomerHandler extends DefaultHandler {
         IOException {
 
         SAXParserFactory saxParserFactory = SAXParserFactory.newNSInstance();
+        saxParserFactory.setNamespaceAware(true);
         SAXParser saxParser = saxParserFactory.newSAXParser();
         saxParser.parse(new File(filename), this);
         return data;
@@ -40,7 +41,7 @@ public class SAXCustomerHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
 
-        currentElement = qName;
+        currentElement = localName;
         switch (currentElement) {
             case "customers":
                 break;

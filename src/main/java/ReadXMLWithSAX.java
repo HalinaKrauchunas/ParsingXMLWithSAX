@@ -5,7 +5,7 @@ public class ReadXMLWithSAX {
     @SuppressWarnings("unused")
     public static void main(String[] args) throws Exception {
 
-        String fileName = "D:\\SAXParserXML\\src\\main\\resources\\customers.xml";
+        String fileName = "D:\\SAXParserXML\\src\\main\\resources\\NScustomers.xml";
 
         SAXCustomerHandler saxCustomerHandler = new SAXCustomerHandler();
         List<Customer> data = saxCustomerHandler.readDataFromXML(fileName);
