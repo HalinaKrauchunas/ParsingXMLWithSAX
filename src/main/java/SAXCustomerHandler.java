@@ -46,10 +46,12 @@ public class SAXCustomerHandler extends DefaultHandler {
             case "customers":
                 break;
             case "customer":
-                customer = new Customer();
-                String idAsString = attributes.getValue(Customer.ID);
-                customer.setId(Integer.parseInt(idAsString));
-                data.add(customer);
+                if (uri.equals("http://www.example.org/customers")) {
+                    customer = new Customer();
+                    String idAsString = attributes.getValue(Customer.ID);
+                    customer.setId(Integer.parseInt(idAsString));
+                    data.add(customer);
+                }
                 break;
             default:
                 currentText = new StringBuilder();
@@ -60,7 +62,7 @@ public class SAXCustomerHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) {
 
-        if (currentElement.equals("customers") || currentElement.equals("customer")) {
+        if (currentElement.equals("customers") || currentElement.equals("customer") || !uri.equals("http://www.example.org/customers")) {
             return;
         }
 
